@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+<template id="fency_report_deliveryslip_document">
+<t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id"></t>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"></t>
+            </t>
+            <div class="header">
+                <div class="row">
+                   <div>
+                    <table style="width:100%">
+                        <tr style="width:100%">
+                            <td class="text-center">
+                        <img src="/bi_professional_reports_templates/static/LOGO.png"
+                            style="max-height: 125px; "/>
+                        </td>
+                        </tr>
+                    </table>
+                   </div>
+                </div>
+            </div>
+
+<t t-call="report.external_layout">
+        <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
+        <div class="page" style="padding-left:15px; padding-right:15px">
+
+            <table style="width:100%">
+            <tr><td class="text-center" >
+            <h2>
+                DELIVERY NOTE<br></br>
+                <strong style="font:15px lucida-console,sans-serif !important; ">TRN: <span style="color:#000000 !important;" t-field="company.partner_id.vat" /></strong>
+            </h2></td>
+            </tr>
+            </table>
+
+            <div class="row">
+                <table style="width:100%">
+                <tr style="height:20px; "></tr>
+                <tr style=" background-color:#A0A0A0; padding-top:20px">
+
+
+                <td style="width:35%; padding-left:5px">
+                <font color="#000000">
+                    <strong>Delivery Note No: </strong></font>
+                    <font color="#FFFFFF"><p t-field="o.name"/></font>
+                </td>
+
+
+                <td class="text-center" style="width:30%">
+                <font color="#000000">
+                    <strong>Scheduled Date: </strong></font>
+                    <font color="#FFFFFF"><p t-field="o.min_date" t-options="{&quot;format&quot;: &quot;dd-MM-yyyy&quot;}"/></font>
+                </td>
+
+
+                <td class="text-right" style="width:35%; padding-right:5px">
+                <font color="#000000">
+                    <strong>P.O No: </strong></font>
+                    <font color="#FFFFFF"><p t-field="o.po_number"/></font>
+                </td>
+            </tr>
+            </table>
+            </div>
+
+            <div class="row" style="padding-top:10px;">
+            <table style="width:100%">
+                <tr>
+                    <u><td style="width:35%; padding-left:10px;">CUSTOMER ADDRESS:</td>
+                    <td class="text-center" style="width:30%">DELIVERY ADDRESS:</td>
+                    <td class="text-right" style="width:35%; padding-right:10px;">OUR DETAILS:</td></u>
+                </tr>
+                <tr>
+                    <td style="width:35%; padding-left:10px;">
+                    <div>
+                        <span style="color:red !important;" t-field="o.partner_id" /><br/>
+                        <span style="color:gray !important; text-transform: lowercase"  t-field="o.partner_id.street" ></span><br/>
+                        <span style="color:gray !important; text-transform: lowercase" t-if="o.partner_id.street2" t-field="o.partner_id.street2" ></span><br/>
+                        <span style="color:gray !important; text-transform: lowercase" t-if="o.partner_id.city" t-field="o.partner_id.city" ></span><br/>
+                        <span style="color:gray !important; text-transform: lowercase" t-if="o.partner_id.country_id" t-field="o.partner_id.country_id"></span><br/>
+                        <span style="color:gray !important;">Phone: </span><span  style="color:gray !important;"  t-field="o.partner_id.phone" /><br/>
+                        <span style="color:gray !important;">Fax: </span><span  style="color:gray !important;"  t-field="o.partner_id.fax" /><br></br>
+                        <span style="color:gray !important;">TRN: </span><span style="color:gray !important;" t-field="o.partner_id.vat" /><br/>
+                    </div>
+                    </td>
+                    <td style="width:30%" class="text-center">
+                                                    <div t-if="o.move_lines and o.move_lines[0].partner_id and o.move_lines[0].partner_id.id != o.partner_id.id">
+                                <div>
+                                    <div style="color:grey !important;" t-field="o.move_lines[0].partner_id"
+                                        t-field-options='{"widget": "contact", "fields": ["address", "name", "phone", "fax"], "no_marker": true}'/>
+                         <div t-field="o.partner_id.vat"/>
+                                  </div>
+                            </div>
+                                                    <div t-if="(o.move_lines and o.move_lines[0].partner_id and o.move_lines[0].partner_id.id == o.partner_id.id) or o.move_lines and not o.move_lines[0].partner_id">
+                                <div style="color:grey !important;" t-field="o.partner_id"
+                                   t-field-options='{"widget": "contact", "fields": ["address", "name", "phone", "fax"], "no_marker": true}'/>
+
+                            </div>
+
+
+
+                    </td>
+                    <td style="width:35%; padding-right:10px; " class="text-right">
+                    <div>
+                        <span style="color:red !important;" t-field="company.partner_id" /><br/>
+                        <span style="color:gray !important;" t-field="company.partner_id.street" /><br/>
+                        <span style="color:gray !important;" t-field="company.partner_id.street2" /><br/>
+                        <span style="color:gray !important;" t-field="company.partner_id.city" /><br/>
+                        <span style="color:gray !important;" t-field="company.partner_id.country_id" /><br/>
+                        <span style="color:gray !important;">Phone: </span><span  style="color:gray !important;"  t-field="company.partner_id.phone" /><br/>
+                        <span style="color:gray !important;">Fax: </span><span  style="color:gray !important;"  t-field="company.partner_id.fax" /><br></br>
+                    </div>
+                  </td>
+                </tr>
+                </table>
+
+            <table class="table table-condensed table table-striped" style="padding-top=50px; padding-bottom=50px;" t-if="not o.pack_operation_ids">
+                        <thead style=" background-color: #A0A0A0;">
+                            <tr style="height:10px; "></tr>
+                            <tr>
+                                <th><font color="#000000"><strong>Product</strong></font></th>
+                                <!--<th><font color="#000000"><strong>Status</strong></font></th>
+                                <th><font color="#000000"><strong>Location</strong></font></th>-->
+                                <th><font color="#000000"><strong>UOM</strong></font></th>
+                                <th class="text-right"><font color="#000000"><strong>Quantity</strong></font></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="o.move_lines" t-as="move">
+                                <td><span t-field="move.product_id"/></td>
+                                <!--<td><span t-field="move.state"/></td>
+                                <td><span t-field="move.location_id"/></td>-->
+                                <td>
+                                    <span t-field="move.product_uom"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="move.product_uom_qty"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="table table-condensed table table-striped" style="padding-top=50px;" t-if="o.pack_operation_ids">
+                        <t t-set="has_serial_number" t-value="o.pack_operation_ids.filtered('pack_lot_ids')" groups="stock.group_production_lot"/>
+                        <thead  style=" background-color:#A0A0A0;">
+                            <tr style="height:10px; "></tr>
+                            <tr>
+                                <th><font color="#000000"><strong>Product</strong></font></th>
+                                <th t-if="has_serial_number"><font color="#000000"><strong>Serial Number</strong></font></th>
+                               <!-- <th><font color="#000000"><strong>Status</strong></font></th>
+                                <th><font color="#000000"><strong>Location</strong></font></th>-->
+                                <th><font color="#000000"><strong>UOM</strong></font></th>
+                                <th class="text-right"><font color="#000000"><strong>Quantity</strong></font></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr t-foreach="o.pack_operation_ids" t-as="pack_operation">
+                                <td>
+                                    <span t-field="pack_operation.product_id"/>
+                                    <t t-if="not pack_operation.product_id and pack_operation.package_id">
+                                        <span  t-field="pack_operation.package_id"/>
+                                    </t>
+                                </td>
+                                <t t-if="has_serial_number">
+                                    <td t-if="pack_operation.pack_lot_ids">
+                                        <table class="table table-condensed" t-if="pack_operation.pack_lot_ids">
+                                            <thead>
+                                                <tr><th>Lot</th><th>Qty</th></tr>
+                                            </thead>
+                                            <tr t-foreach="pack_operation.pack_lot_ids" t-as="packlot">
+                                                <td>
+                                                    <span t-field="packlot.lot_id"/>
+                                                    <t t-if="not packlot.lot_id">
+                                                        <span t-field="packlot.lot_name"/>
+                                                    </t>
+                                                </td>
+                                                <td>
+                                                    <span t-field="packlot.qty"/> <t t-if="o.picking_type_id.use_existing_lots and o.state!='done'"> / <span t-field="packlot.qty_todo"/></t>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                    <td t-if="not pack_operation.pack_lot_ids"/>
+                                </t>
+                               <!-- <td>
+                                    <span t-field="pack_operation.picking_id.move_lines[pack_operation_index].state"/>
+                                </td>
+                                <td>
+                                    <span t-field="pack_operation.location_id"/>
+                                    <span t-if="pack_operation.package_id">:</span>
+                                    <span t-field="pack_operation.package_id"/>
+                                </td>-->
+                                <td>
+                                   <span t-field="pack_operation.product_uom_id"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="pack_operation.product_qty"/>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+
+    </t>
+</template>
+
+
+<template id="report_deliveryslip"  inherit_id="stock.report_deliveryslip">
+<xpath  expr="//t[@t-call='stock.report_delivery_document']" position='replace'>
+
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-if="o.company_id.stock_template == 'fency'">
+                <t t-call="bi_professional_reports_templates.fency_report_deliveryslip_document" t-lang="o.partner_id.lang"/>
+            </t>
+            <t t-if="not o.company_id.stock_template">
+                <t t-call="stock.report_delivery_document" t-lang="o.partner_id.lang"/>
+            </t>
+        </t>
+    </t>
+</xpath>
+</template>
+</data>
+</openerp>

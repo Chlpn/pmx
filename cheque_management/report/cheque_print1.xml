@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="cheque_print_report1">
+            <t t-call="report.html_container">
+                <t t-foreach="docs" t-as="o">
+
+                        <div class="page">
+
+<!--                    <strong>A/C Payee only</strong>-->
+                            <style>
+                                <!--
+table, th, td {
+    border: 1px solid black;
+}-->
+</style>
+
+                    <table style="width:100%; ">
+                        <tr >
+                            <td style="width:73%; padding-left:13%; ">
+                            </td>
+                            <td style="width:27%;  padding-left:8%; font:18px lucida-console,sans-serif !important; ">
+                                <strong>
+                            <span t-field="o.cheque_date"/>
+                                </strong>
+
+                            </td>
+                        </tr>
+                        <tr style="height:55px "></tr>
+                        <tr>
+                            <td style="width:73%; padding-left:13%; height:25px ">
+                            </td>
+
+                            <td style="width:27%; padding-left:8%; font:18px lucida-console,sans-serif !important;">
+                                <strong>**<span t-field="o.amount"/>**</strong>
+                            </td>
+                        </tr>
+                    </table>
+
+                <div class="col-xs-6 " style="padding-left:18%; padding-top: 5px;">
+<!--                    <strong>Name:</strong>-->
+                   <span style="font:18px lucida-console,sans-serif !important;" t-field="o.name_in_cheque"/>
+                </div>
+<!--                    <strong>Amount in words:</strong>-->
+                    <table style="width:100%;">
+                        <tr>
+                            <td style="padding-left:7%; height:50px; font:18px lucida-console,sans-serif !important;">
+                                <span t-esc="o.amount_to_text(o.amount)"/>
+                            </td>
+                        </tr>
+                    </table>
+                    <table style="width:100%;">
+                        <tr style="height:300px "></tr>
+                        <tr>
+                            <td colspan="3" style="text-align:center; "><h2>PAYMENT VOUCHER</h2></td>
+                        </tr>
+                        <tr>
+                            <td style="width:60% "></td>
+                            <strong><td style="width:15% ">PAY NO </td></strong>
+                            <strong><td style="width:25%; padding-right:5px;">: <span t-field="o.issue_journal_entry"/></td></strong>
+                        </tr>
+                        <tr>
+                            <td style="width:60% "></td>
+                            <strong><td style="width:15% ">PRINT DATE </td></strong>
+                            <strong><td style="width:25%; padding-right:5px;">: <span t-field="o.date_issue"/></td></strong>
+                        </tr>
+                        <tr>
+                            <td style="width:65% "></td>
+                            <strong><td style="width:15% ">CHQ DATE </td></strong>
+                            <strong><td  style=" width:25%; padding-right:5px;">: <span t-field="o.cheque_date"/></td></strong>
+                        </tr>
+                        <tr style="height:50px "></tr>
+                    </table>
+                    <table style="width:100% ">
+                        <tr>
+                            <strong><td style="width:25% ">PAID TO </td></strong>
+                            <strong><td style="width:75% ">: <span t-esc="o.partner_id.name"/></td></strong>
+                        </tr>
+                        <tr>
+                            <strong><td style="width:25% ">CHEQUE AMOUNT </td></strong>
+                            <strong><td style="width:75% ">: <span t-esc="o.amount_to_text(o.amount)"/></td></strong>
+                        </tr>
+                    </table>
+                    <table style="width:100% ">
+                        <tr style="height:300px "></tr>
+                        <tr>
+                            <strong><td style="width:35%; text-align:center; ">PREPARED BY</td></strong>
+                            <strong><td style="width:30%; text-align:center; ">CHECKED BY</td></strong>
+                            <strong><td style="width:35%; text-align:center; ">RECEIVED BY</td></strong>
+                        </tr>
+                    </table>
+
+
+
+<!-- <table   style="border-spacing:0;margin-bottom:0;height: 187px; width: 800px; border: 2px solid black;">
+             
+                <tr>
+                    <td>
+                       A/C Payee only
+                    </td>
+                    <td></td>
+                  
+                   
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>Date:<span t-field="o.cheque_date" ></span></td>
+                </tr>
+                <tr>
+                    <td>Name:</td><td style="padding-right:2cm;"><hr style="padding-right:2cm;"></hr></td>
+                </tr>
+                <tr>
+                    <td>Amount in words:</td><td><hr></hr></td>
+                </tr>
+            </table>                       -->
+                        </div>
+                           
+
+                    
+                </t>
+            </t>
+            </template>
+    </data>
+</odoo>

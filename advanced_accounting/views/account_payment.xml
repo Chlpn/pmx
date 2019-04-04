@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model = "ir.ui.view" id = "new_account_invoice_form_view">
+            <field name="name">account.invoice.form.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='invoice_print']" position="after">
+                    <button name="action_register_payment" type="object" states="open" string="Register Payment"/>
+                </xpath>
+                <xpath expr="//button[@name='%(account.action_account_invoice_payment)d']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record model = "ir.ui.view" id = "modify_account_invoice_form_view">
+            <field name="name">account.invoice.form.inherit</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_supplier_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_invoice_cancel']" position="after">
+                    <button name="action_register_payment" type="object" states="open" string="Register Payment"/>
+                </xpath>
+                <xpath expr="//button[@name='%(account.action_account_invoice_payment)d']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="wizard_register_payment">
+            <field name="name">register.payment.wizard</field>
+            <field name="model">register.payment</field>
+            <field name="arch" type="xml">
+                <form string="Register Payment">
+                    <group>
+                        <group>
+                            <field name="payment_method"/>
+                            <field name="journal_id" attrs="{'invisible':[('payment_method','=','cheque')], 'required':[('payment_method','=','cash')]}"/>
+                            <field name="amount"/>
+                        </group>
+                        <group>
+                            <field name="payment_date"/>
+                            <field name="ref"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="register_payment" string="Validate" type="object" class="oe_highlight"/>
+                        or <button string="Cancel" class="oe_link" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <act_window
+            id="account.action_account_payment_from_invoices"
+            name="Register Payment"
+            res_model="register.payment"
+            src_model="account.invoice"
+            view_mode="form"
+            multi="True"
+            target="new"
+            key2="client_action_multi"
+        />
+
+
+    </data>
+</odoo>

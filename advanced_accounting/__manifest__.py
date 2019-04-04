@@ -1,0 +1,27 @@
+{
+    'name': 'Advanced Accounting',
+    'version': '20180411.0',
+    'category': 'Accounting &amp; Finance',
+    'sequence': 14,
+    'author': "iSquare Informatics",
+    'website': 'https://www.isi.ae',
+    'summary': '',
+    'depends': ['account', 'account_accountant', 'cheque_management','account_cancel'],
+    'data': [
+        'data/demo.xml',
+        'views/account_journal.xml',
+        'views/cash_receipt_voucher.xml',
+        'views/cash_payment_voucher.xml',
+        'views/account_payment.xml',
+        'views/fund_transfer.xml',
+        'report/cash_payment_template.xml',
+        'report/cash_receipt_template.xml',
+        'report/fund_transfer_template.xml',
+        'report/cash_report.xml',
+        'security/ir.model.access.csv'
+    ],
+    'demo': [],
+    'installable': True,
+    'application': True,
+    'auto_install': False,
+}

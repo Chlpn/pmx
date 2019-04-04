@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+ 
+            <record id="invoice_form_form_inherit_mod" model="ir.ui.view">
+            <field name="name">account.invoice.form.inherit.mod</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                      <xpath expr="//field[@name='payment_term_id']" position="after">
+                                                  
+                    <field name="po_number" />
+                    <field name="do_number_invoiced" widget="many2many_tags" />
+
+                    
+                    </xpath>
+             
+            </field>
+        </record>
+        
+             
+
+</odoo>

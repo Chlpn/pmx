@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+    <template id="fency_report_invoice_document">
+        <t t-if="o and 'company_id' in o">
+                <t t-set="company" t-value="o.company_id"></t>
+            </t>
+            <t t-if="not o or not 'company_id' in o">
+                <t t-set="company" t-value="res_company"></t>
+            </t>
+            <div class="header">
+               <div class="row">
+                   <div>
+                    <table style="width:100%">
+                        <tr style="width:100%">
+                            <td class="text-center">
+                                <img src="/bi_professional_reports_templates/static/LOGO.png"
+                                style="max-height: 125px; "/>
+                            </td>
+                        </tr>
+                    </table>
+                       </div>
+
+              <!--<div class="row">
+                    <div class="col-xs-3">
+                        <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo"
+                            style="max-height: 85px;" />
+                    </div>-->
+    </div></div>
+
+    <t t-call="report.external_layout">
+        <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})" />
+        <div class="page" style="padding-left:15px; padding-right:15px">
+            <table style="width:100%">
+            <tr><td class="text-center" >
+            <h2>
+                <span  t-if="o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')"><font color="#000000">TAX INVOICE</font></span>
+                <span  t-if="o.type == 'out_invoice' and o.state == 'proforma2'"><font color="#000000">PRO-FORMA</font></span>
+                <span   t-if="o.type == 'out_invoice' and o.state == 'draft'"><font color="#000000">Draft Invoice</font></span>
+                <span   t-if="o.type == 'out_invoice' and o.state == 'cancel'"><font color="#000000">Cancelled Invoice</font></span>
+                <span   t-if="o.type == 'out_refund'"><font color="#000000">Refund</font></span>
+                <span   t-if="o.type == 'in_refund'"><font color="#000000">Vendor Refund</font></span>
+                <span   t-if="o.type == 'in_invoice'"><font color="#000000">Vendor Bill</font></span><br></br>
+                <strong style="font:15px lucida-console,sans-serif !important; ">TRN: <span style="color:#000000 !important;" t-field="company.partner_id.vat" /></strong>
+                <!--<font color="#000000"><span t-field="o.number"/></font>-->
+            </h2></td>
+            </tr>
+            </table>
+            <div class="row">
+            <table style="width:100%; font:15px lucida-console,sans-serif !important; ">
+                <!--<tr style="font:15px lucida-console,sans-serif !important;"><td colspan="3" class="text-left"><strong style="padding-left:15px; ">TRN: <span style="color:#000000 !important;" t-field="company.partner_id.vat" /></strong></td></tr>-->
+                <tr style="height:20px; "></tr>
+            <tr style=" background-color:#A0A0A0; padding-top:20px">
+
+
+                <td style="width:18%; padding-left:5px" t-if="o.date_invoice">
+                <font color="#000000">
+                    <strong>Invoice No:</strong></font>
+                    <font color="#FFFFFF"><p t-field="o.number"/></font>
+                </td>
+
+
+                <td class="text-center" style="width:16%" t-if="o.date_invoice">
+                <font color="#000000">
+                    <strong>Invoice Date:</strong></font>
+                    <font color="#FFFFFF"><p t-field="o.date_invoice"/></font>
+                </td>
+
+               <!-- <div class="col-xs-3" t-if="o.date_due and o.type == 'out_invoice' and (o.state == 'open' or o.state == 'paid')">
+                    <font color="#000000">
+                    <strong>Due Date:</strong>
+                    <p t-field="o.date_due"/></font>
+                </div>-->
+                <td class="text-center" style="width:16%" t-if="o.payment_term_id">
+                <font color="#000000">
+                    <strong> Payment Term:</strong></font>
+                    <font color="#FFFFFF"><p t-field="o.payment_term_id"/></font>
+                </td>
+
+
+                <td>
+                <td class="text-center" style="width:16%" t-if="o.po_number">
+                <font color="#000000">
+                    <strong> PO No:</strong></font>
+                    <font color="#FFFFFF"><p t-field="o.po_number"/></font>
+                </td>
+
+                <td class="text-center" style="width:16%" t-if="o.date_invoice">
+                <font color="#000000">
+                    <strong>Do No:</strong></font>
+                    <font color="#FFFFFF"><span t-foreach="o.do_number_invoiced" t-as="l">
+                    <span style="color:#000000 !important;" t-field="l.name"/>,
+                    </span>
+                    </font>
+                </td>
+
+
+                <td class="text-right" style="width:18%; padding-right:5px"  t-if="o.user_id">
+                    <font color="#000000">
+                        <strong>SalesPerson:</strong></font>
+                    <font color="#FFFFFF"><p t-field="o.user_id"/></font>
+                </td>
+                </td>
+
+</tr>
+            </table>
+                </div>
+    <div class="row" style="padding-top:10px;">
+        <div class="col-xs-8" style="font:15px lucida-console,sans-serif !important;" >
+                        <span>Customer: </span><span style="color:#220C85 !important;" t-field="o.partner_id" /><br/>
+                        <span style="color:gray !important;"  t-field="o.partner_id.street" ></span><br/>
+                        <span style="color:gray !important;" t-if="o.partner_id.street2" t-field="o.partner_id.street2" ></span><br/>
+                        <span style="color:gray !important;" t-if="o.partner_id.city" t-field="o.partner_id.city" ></span><br/>
+                        <span style="color:gray !important;" t-if="o.partner_id.country_id" t-field="o.partner_id.country_id"></span><br/>
+                        <span style="color:gray !important;">Phone: </span><span  style="color:gray !important;"  t-field="o.partner_id.phone" /><br/>
+                        <span style="color:gray !important;">Fax: </span><span  style="color:gray !important;"  t-field="o.partner_id.fax" /><br></br>
+                        <span style="color:gray !important;">TRN: </span><span style="color:gray !important;" t-field="o.partner_id.vat" /><br/>
+
+        </div>
+
+        <div class="col-xs-4 pull-right text-right" style="font:15px lucida-console,sans-serif !important;" >
+                        <span>Address: </span><br/>
+                        <span style="color:gray !important;" t-field="company.partner_id.street" /><br/>
+                        <span style="color:gray !important;" t-field="company.partner_id.street2" /><br/>
+                        <span style="color:gray !important;" t-field="company.partner_id.city" /><br/>
+                        <span style="color:gray !important;" t-field="company.partner_id.country_id" /><br/>
+                        <span style="color:gray !important;">Phone: </span><span  style="color:gray !important;"  t-field="company.partner_id.phone" /><br/>
+                        <span style="color:gray !important;">Fax: </span><span  style="color:gray !important;"  t-field="company.partner_id.fax" /><br></br>
+        </div>
+
+            <div style="padding-top:20px;"></div>
+            <!-- Is there a discount on at least one line? -->
+            <t t-set="display_discount" t-value="any([l.discount for l in o.invoice_line_ids])"/>
+
+            <table class="table table-condensed table table-striped">
+                <thead style=" background-color: #A0A0A0; border:1px " >
+                    <tr style="height:10px; "></tr>
+                    <tr>
+                        <th><font color="#000000">Sl. </font></th>
+                        <th><font color="#000000">Description</font></th>
+                        <th class="text-right"><font color="#000000">Quantity </font></th>
+                        <th class="text-right"><font color="#000000">Unit Price</font></th>
+                        <th style="color:#000000 !important;"  t-if="display_discount" class="text-right" groups="sale.group_discount_per_so_line">Disc.(%)</th>
+                        <th  class="text-right"><font color="#000000">VAT 5%</font></th>
+                        <th class="text-right"><font color="#000000">Price</font></th>
+                    </tr>
+                </thead>
+                <tbody class="invoice_tbody">
+                    <tr t-foreach="o.invoice_line_ids" t-as="l">
+                        <td> <span t-esc="l_index + 1"/></td>
+                        <td><span t-field="l.name"/></td>
+
+                        <td class="text-right">
+                            <span t-field="l.quantity"/>
+                            <span t-field="l.uom_id"  groups="product.group_uom"/>
+                        </td>
+                        <td class="text-right">
+                            <span t-field="l.price_unit"/>
+                        </td>
+                        <td t-if="display_discount" class="text-right" groups="sale.group_discount_per_so_line">
+                            <span t-field="l.discount"/>
+                        </td>
+                        <td class="text-right">
+                        <span t-if="l.invoice_line_tax_ids" t-esc="'%.2f'%((l.price_subtotal + (l.price_subtotal * 5/100))*5/105) "/>
+                        <span t-if="not l.invoice_line_tax_ids" t-esc="'%.2f'%(0.00) "/>
+                        </td>
+                        <td class="text-right">
+                            <span t-field="l.price_subtotal"
+                                t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+            <div class="row">
+                <div class="col-xs-4 pull-right">
+                    <table class="table table-condensed">
+                        <tr class="border-black">
+                            <td><strong>Subtotal</strong></td>
+                            <td class="text-right">
+                                <span t-field="o.amount_untaxed" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                            </td>
+                        </tr>
+
+                            <tr>
+                                <td>Taxes</td>
+                            <td class="text-right">
+                                <span t-field="o.amount_tax"
+                                    t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                            </td>
+                            </tr>
+
+                        <tr class="border-black">
+                            <td><strong>Total Invoice Amount</strong></td>
+                            <td class="text-right">
+                                 <span t-field="o.amount_total" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                            </td>
+                        </tr>
+
+                        <tr>
+                                <td>Payment/Credit applied</td>
+                            <td class="text-right">
+                                <span t-esc="(o.amount_total - o.residual)"
+                                    t-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                            </td>
+                        </tr>
+
+                        <tr class="border-grey" style=" background-color: #DEE5E5;">
+                            <td ><strong>TOTAL AED</strong></td>
+                            <td class="text-right" >
+                                 <span t-field="o.residual" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                            </td>
+                        </tr>
+
+
+                    </table>
+                </div>
+                <div class="col-xs-8" style="padding-top:70px;">
+                    <span t-if="o.paypal_chk == False">
+               <table style="width:100%">
+                   <tr><td colspan="2"><strong style="color:#220C85 !important;">Bank Account Details</strong></td></tr>
+                    <tr><td style="width:20%">
+                <span>Bank Name  </span><br/>
+                <!--<span>Branch Name : </span><span style="color:gray !important;" t-field="o.company_id.bank_account_id.branch_name"/><br/>-->
+                <span>Account Name </span><br/>
+                <span>Account No </span><br/>
+                <span>IBAN No </span><br/>
+                <!--<span>Swift Code : </span><span style="color:gray !important;" t-field="o.company_id.bank_account_id.swift_code"/><br/>-->
+            </td>
+                    <td style="width:80%;">
+                        : <span style="color:gray !important;" t-field="o.company_id.bank_account_id.bank_id.name"/><br/>
+                        : <span style="color:gray !important;" t-field="o.company_id.bank_account_id.partner_id"/><br/>
+                        : <span style="color:gray !important;" t-field="o.company_id.bank_account_id.acc_number"/><br/>
+                        : <span style="color:gray !important;" t-field="o.company_id.bank_account_id.ifsc"/><br/>
+                    </td>
+                    </tr>
+                </table>
+            </span>
+
+                </div>
+            </div>
+<div style="padding-top:50px;">
+</div>
+           <!-- <p t-if="o.comment">
+                <strong>Terms And Conditions:</strong>
+                <span t-field="o.comment"/>
+            </p>
+            <p t-if="o.paypal_chk">
+            <strong style="color:#220C85 !important;">Paypal Account Details</strong><br/>
+                <span>Paypal Id : </span><span style="color:gray !important;" t-field="o.paypal_id"/>
+            </p>-->
+                <table width="100%" >
+                <tr>
+                    <td width="65%" style="padding-top:10px" >Authorized Signature: <img src="/bi_professional_reports_templates/static/sign.png"
+                            style="max-height: 40px;"/><img src="/bi_professional_reports_templates/static/stamp.png"
+                            style="max-height: 75px;"/>
+                    </td>
+                    <td width="35%" style="padding-top:10px" >Receiver Signature: </td>
+                </tr>
+                </table>
+
+            <p t-if="o.fiscal_position_id.note">
+                <strong>Fiscal Position Remark:</strong>
+                <span t-field="o.fiscal_position_id.note"/>
+            </p>
+        </div>
+    </t>
+</template>
+
+<template id="report_invoice"   inherit_id="account.report_invoice">
+
+   <xpath expr="//t[@t-call='account.report_invoice_document']" position="replace" >
+    <t t-call="report.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-if="o.company_id.account_template == 'fency' ">
+                <t t-call="bi_professional_reports_templates.fency_report_invoice_document" t-lang="o.partner_id.lang"/>
+            </t>
+            <t t-if="o.company_id.account_template == 'classic'">
+                <t t-call="bi_professional_reports_templates.classic_report_invoice_document" t-lang="o.partner_id.lang"/>
+            </t>
+            <t t-if="o.company_id.account_template == 'modern' ">
+                <t t-call="bi_professional_reports_templates.modern_report_invoice_document" t-lang="o.partner_id.lang"/>
+            </t>
+            <t t-if="o.company_id.account_template == 'odoo_standard'">
+                <t t-call="bi_professional_reports_templates.odoo_std_report_invoice_document" t-lang="o.partner_id.lang"/>
+            </t>
+            <t t-if="not o.company_id.account_template">
+                <t t-call="account.report_invoice_document" t-lang="o.partner_id.lang"/>
+            </t>
+        </t>
+    </t>
+  </xpath>
+</template>
+
+</data>
+</openerp>

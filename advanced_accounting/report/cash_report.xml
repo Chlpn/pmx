@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+            id="report_cash_payment"
+            string="Cash Payment Voucher"
+            model="payment.voucher"
+            report_type="qweb-pdf"
+            file="advanced_accounting.cash_payment_report"
+            name="advanced_accounting.cash_payment_report"
+            menu="False"
+        />
+        <report
+            id="report_cash_receipt"
+            string="Cash Receipt Voucher"
+            model="receipt.voucher"
+            report_type="qweb-pdf"
+            file="advanced_accounting.cash_receipt_report"
+            name="advanced_accounting.cash_receipt_report"
+            menu="False"
+        />
+        <report
+            id="report_fund_transfer"
+            string="Fund Transfer Report"
+            model="fund.transfer"
+            report_type="qweb-pdf"
+            file="advanced_accounting.fund_transfer_report"
+            name="advanced_accounting.fund_transfer_report"
+            menu="False"
+        />
+    </data>
+</odoo>
